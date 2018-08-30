@@ -29,6 +29,7 @@ export default (state = { articles: [] }, action) => {
               ...action.data.article
             };
           }
+          return article;
         }),
         articleToEdit: undefined
       };

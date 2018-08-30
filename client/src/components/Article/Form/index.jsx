@@ -29,7 +29,6 @@ class Form extends React.Component {
   handleSubmit() {
     const { onSubmit, articleToEdit, onEdit } = this.props;
     const { title, body, author } = this.state;
-    console.log("state", this.state);
 
     if (!articleToEdit) {
       return axios
@@ -106,6 +105,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Form);
