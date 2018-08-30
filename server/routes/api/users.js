@@ -36,7 +36,11 @@ router.post("/login", async (req, res) => {
       let user = await Users.findOne({ email: req.body.email.trim() });
       if (user) {
         if (await util.matchPassword(req.body.password, user.password)) {
-          res.json(user);
+          res.json({
+            id: user._id,
+            name: user.name,
+            email: user.email
+          });
         } else {
           res.json({ message: "Credentials invalid" });
         }

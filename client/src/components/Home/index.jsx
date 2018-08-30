@@ -3,6 +3,7 @@ import { Form } from "../Article";
 import { connect } from "react-redux";
 import axios from "axios";
 import moment from "moment";
+import { Login } from "../User";
 
 class Home extends React.Component {
   constructor(props) {
@@ -35,13 +36,18 @@ class Home extends React.Component {
   }
 
   render() {
-    const { articles } = this.props;
+    const { articles, username } = this.props;
+    console.log("Home render : ", this.props);
 
     return (
       <div className="container">
         <div className="row pt-5">
           <div className="col-12 col-lg-6 offset-lg-3">
             <h1 className="text-center">LightBlog</h1>
+          </div>
+          <Login />
+          <div className="col-12 col-lg-6 offset-lg-3">
+            <h1 className="text-center">Welcome {username}</h1>
           </div>
           <Form />
         </div>
@@ -86,7 +92,8 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  articles: state.home.articles
+  articles: state.home.articles,
+  username: state.user.username
 });
 
 const mapDispatchToProps = dispatch => ({
