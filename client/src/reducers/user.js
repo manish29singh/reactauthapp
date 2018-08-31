@@ -4,7 +4,7 @@ export default (state = {}, action) => {
       console.log("USER REDUCER : ", action.data);
       return {
         ...state,
-        username: action.data.name
+        user: action.data
       };
     default:
       return state;

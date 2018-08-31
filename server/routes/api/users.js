@@ -7,6 +7,9 @@ const util = require("../../utils/index");
  */
 router.post("/signup", async (req, res) => {
   if (req.body.email && req.body.password && req.body.name) {
+    if (await util.userExists(req.body.email)) {
+      return res.json({ sucess: false, message: "User already exists." });
+    }
     try {
       let User = new Users({
         name: req.body.name,
@@ -16,11 +19,15 @@ router.post("/signup", async (req, res) => {
 
       let newUser = await User.save();
       if (newUser) {
-        res.send({ success: true, message: "User registration successful" });
+        res.json({
+          success: true,
+          message: "User registration successful",
+          data: newUser
+        });
       }
     } catch (err) {
       console.log("Error occured while regisering user: ", err.message);
-      res.send(err.message);
+      res.json(err.message);
     }
   } else {
     res.json({ message: "Fields can not be empty" });

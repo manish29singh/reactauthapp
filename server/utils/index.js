@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const Users = require("../models/Users");
 
 module.exports.encryptPassword = async password => {
   try {
@@ -16,6 +17,14 @@ module.exports.encryptPassword = async password => {
 module.exports.matchPassword = async (candidatePassword, hashPassword) => {
   try {
     return await bcrypt.compare(candidatePassword, hashPassword);
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports.userExists = async email => {
+  try {
+    return await Users.findOne({ email: email });
   } catch (err) {
     throw err;
   }

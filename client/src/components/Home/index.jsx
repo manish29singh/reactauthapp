@@ -3,7 +3,8 @@ import { Form } from "../Article";
 import { connect } from "react-redux";
 import axios from "axios";
 import moment from "moment";
-import { Login } from "../User";
+import { Redirect } from "react-router-dom";
+import localStorage from "local-storage";
 
 class Home extends React.Component {
   constructor(props) {
@@ -36,8 +37,13 @@ class Home extends React.Component {
   }
 
   render() {
-    const { articles, username } = this.props;
-    console.log("Home render : ", this.props);
+    const { articles } = this.props;
+    console.log("user fetched : ", user);
+    const user = localStorage.get("user");
+
+    if (!localStorage.get("userLoggedIn")) {
+      return <Redirect to="/login" />;
+    }
 
     return (
       <div className="container">
@@ -45,9 +51,8 @@ class Home extends React.Component {
           <div className="col-12 col-lg-6 offset-lg-3">
             <h1 className="text-center">LightBlog</h1>
           </div>
-          <Login />
           <div className="col-12 col-lg-6 offset-lg-3">
-            <h1 className="text-center">Welcome {username}</h1>
+            <h1 className="text-center">Welcome {user.name}</h1>
           </div>
           <Form />
         </div>
@@ -93,7 +98,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
   articles: state.home.articles,
-  username: state.user.username
+  user: state.user.user
 });
 
 const mapDispatchToProps = dispatch => ({
